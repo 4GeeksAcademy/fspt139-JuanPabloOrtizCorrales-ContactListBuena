@@ -2,17 +2,17 @@ import { getAgenda } from "./Services/services";
 
 export const initialStore=()=>{
   return{
-    contact: []
+    contacts: []
   }
 }
 
 export default function storeReducer(store, action = {}) {
   switch(action.type){
+
     case 'add_contact':
       return {
-        ...store.contact.map(action.payload)
-        
-
+        ...store, 
+        contacts: action.payload
       }
 
       
