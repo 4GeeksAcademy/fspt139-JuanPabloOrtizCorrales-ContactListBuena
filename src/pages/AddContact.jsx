@@ -1,10 +1,12 @@
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { useEffect, useState } from "react";
-import { getAgenda } from "../Services/services.js";
+import { createContact, getAgenda } from "../Services/services.js";
+import { useNavigate } from "react-router-dom";
 
 export const AddContact = () => {
 
+    const navigate = useNavigate()
     const { store, dispatch } = useGlobalReducer()
     const [contact, setContact] = useState({
         "name": "",
@@ -14,15 +16,25 @@ export const AddContact = () => {
     })
 
     const handleChange = (event) => {
-        setContact({...contact,[event.target.name]:event.target.value})
+        setContact({
+            ...contact,
+            [event.target.name] :event.target.value
+        })
     }
 
     useEffect(()=>{
         getAgenda(dispatch)
 
     },[])
+
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+        createContact(contact, dispatch, navigate)
+
+    }
+
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <label htmlFor="name" className="form-label">Name</label>
             <input type="text" className="form-control" name="name" id="name" value={contact.name} onChange={handleChange} aria-describedby="name"></input>
             <label htmlFor="phone" className="form-label">phone</label>

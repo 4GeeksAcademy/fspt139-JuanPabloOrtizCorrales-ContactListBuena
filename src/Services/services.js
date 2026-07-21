@@ -19,16 +19,21 @@ export const createAgenda = async () => {
 
 }
 
-export const createContact = async () => {
+export const createContact = async (contact, dispatch, navigate) => {
     const response = await fetch("https://playground.4geeks.com/contact/agendas/agendita/contacts", {
         method: "POST",
         body: JSON.stringify(contact),
         headers: "Content-Type: application/json"
     })
+    if(response.ok){
+        getAgenda(dispatch)
+        navigate("/")
+
+    }
     const data = await response.json()
     
     
-    getAgenda()
+    
     setContact({
         "name": "",
         "phone": "",
