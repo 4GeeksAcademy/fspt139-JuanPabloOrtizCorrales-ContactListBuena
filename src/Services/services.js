@@ -23,7 +23,7 @@ export const createContact = async (contact, dispatch, navigate) => {
     const response = await fetch("https://playground.4geeks.com/contact/agendas/agendita/contacts", {
         method: "POST",
         body: JSON.stringify(contact),
-        headers: "Content-Type: application/json"
+        headers: {"Content-Type": "application/json"}
     })
     if(response.ok){
         getAgenda(dispatch)
@@ -32,29 +32,25 @@ export const createContact = async (contact, dispatch, navigate) => {
     }
     const data = await response.json()
     
-    
-    
-    setContact({
-        "name": "",
-        "phone": "",
-        "email": "",
-        "address": ""
-    })
 }
 
-export const editContact = async () => {
-    const response = await fetch("https://playground.4geeks.com/contact/agendas/agendita/contacts/1", {
+export const editContact = async (id, contact, dispatch, navigate) => {
+    const response = await fetch(`https://playground.4geeks.com/contact/agendas/agendita/contacts/${id}`, {
         method: "PUT",
         body: JSON.stringify(contact),
-        headers: "Content-Type: application/json"
+        headers: {"Content-Type": "application/json"}
     })
     const data = await response.json()
-    getAgenda()
-    setContact({
-        "name": "",
-        "phone": "",
-        "email": "",
-        "address": ""
+    getAgenda(dispatch)
+    navigate("/")
+}
+
+export const deleteContact = async (id,dispatch) => {
+    const response = await fetch(`https://playground.4geeks.com/contact/agendas/agendita/contacts/${id}`, {
+        method: "DELETE",
     })
+    getAgenda(dispatch)
     
 }
+
+
